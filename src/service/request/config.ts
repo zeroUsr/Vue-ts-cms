@@ -6,7 +6,8 @@ console.log(process.env.NODE_ENV)
 // development 开发环境
 // production 生产环境
 if (process.env.NODE_ENV === 'development') {
-  BASE_URL = 'http://123.207.32.32:8000'
+  // BASE_URL = '/api'
+  BASE_URL = 'http://152.136.185.210:5000'
 } else if (process.env.NODE_ENV === 'production') {
   BASE_URL = 'http://zero.org/prod'
 } else {

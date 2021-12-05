@@ -38,7 +38,6 @@ class ZeroRequest {
             text: '加载中……'
           })
         }
-        console.log('全局请求成功拦截')
         return config
       },
       (err) => {
@@ -52,7 +51,6 @@ class ZeroRequest {
       (config) => {
         this.loading?.close()
 
-        console.log('全局响应成功拦截')
         const data = config.data
         // 对响应失败返回数据时的拦截
         if (data.returnCode === '-1001') {
@@ -62,7 +60,6 @@ class ZeroRequest {
         }
       },
       (err) => {
-        console.log('全局响应失败拦截')
         if (err.resopnse.status === 404) {
           console.log('404错误')
         }

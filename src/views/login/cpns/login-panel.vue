@@ -1,8 +1,8 @@
 <template>
   <div class="login-panel">
     <h2 class="title">后台管理系统</h2>
-    <el-tabs type="border-card" class="border-card" stretch>
-      <el-tab-pane>
+    <el-tabs type="border-card" class="border-card" stretch v-model="tabRef">
+      <el-tab-pane name="account">
         <template #label>
           <span class="table">
             <el-icon><user-filled /></el-icon>账号登录
@@ -10,22 +10,24 @@
         </template>
         <login-account ref="accountRef" />
       </el-tab-pane>
-      <el-tab-pane>
+      <el-tab-pane name="phone">
         <template #label>
           <span class="table">
             <el-icon><iphone /></el-icon>手机登录
           </span>
         </template>
-        <login-phone />
+        <login-phone ref="phoneRef" />
       </el-tab-pane>
     </el-tabs>
     <div class="account-control">
-      <el-checkbox
-        class="keep-password"
-        v-model="isKeepPassword"
-        label="记住密码"
-      ></el-checkbox>
-      <el-link type="primary">忘记密码</el-link>
+      <template v-if="tabRef === 'account'">
+        <el-checkbox
+          class="keep-password"
+          v-model="isKeepPassword"
+          label="记住密码"
+        ></el-checkbox>
+        <el-link type="primary">忘记密码</el-link>
+      </template>
     </div>
 
     <el-button class="login-btn" type="primary" @click="handleLoginClick"
@@ -37,6 +39,8 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 
+import localCache from '@/utils/cache'
+
 import LoginAccount from './login-account.vue'
 import LoginPhone from './login-phone.vue'
 
@@ -46,21 +50,25 @@ export default defineComponent({
     LoginPhone
   },
   setup() {
-    const isKeepPassword = ref(false)
-    /*
-      typeof LoginAccount: 获取组件对象的类型
-      InstanceType<typeof LoginAccount>: 获取组件对象类型的实例类型
-    */
+    const tabRef = ref('account')
+    const isKeepPassword = ref(localCache.getCache('isKeepPassword') ?? true)
     const accountRef = ref<InstanceType<typeof LoginAccount>>()
+    const phoneRef = ref<InstanceType<typeof LoginPhone>>()
 
     const handleLoginClick = () => {
-      accountRef.value?.loginAction()
+      if (tabRef.value === 'account') {
+        accountRef.value?.loginAction(isKeepPassword.value)
+      } else {
+        phoneRef.value?.loginPhone()
+      }
     }
 
     return {
       isKeepPassword,
-      handleLoginClick,
-      accountRef
+      accountRef,
+      phoneRef,
+      tabRef,
+      handleLoginClick
     }
   }
 })
@@ -87,6 +95,7 @@ export default defineComponent({
 
   .account-control {
     display: flex;
+    height: 20px;
     margin-top: 10px;
     justify-content: space-between;
 

@@ -5,6 +5,18 @@ module.exports = {
   // 配置打包输出的文件夹
   // outputDir: './bulid',
   // 配置方式二: 和 webpack 的属性一致,最后会将其合并
+  // devServer: {
+  // 跨域请求
+  //   proxy: {
+  //     '^/api': {
+  //       target: 'http://152.136.185.210:5000',
+  //       pathRewrite: {
+  //         '^/api': ''
+  //       },
+  //       changeOrigin: true
+  //     }
+  //   }
+  // },
   configureWebpack: {
     resolve: {
       alias: {

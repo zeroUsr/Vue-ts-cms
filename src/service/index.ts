@@ -1,29 +1,26 @@
-import ZeroRequest from './request'
-
 import { BASE_URL, TIME_OUT } from './request/config'
 
+import ZeroRequest from './request'
+import localCache from '@/utils/cache'
 const zeroRequest = new ZeroRequest({
   baseURL: BASE_URL,
   timeout: TIME_OUT,
   interceptors: {
     requestInterceptor(config) {
       // 使每次请求携带 token
-      const token = ''
+      const token = localCache.getCache('token')
       if (token) {
         if (config.headers) {
           config.headers.Authorization = `Bearer ${token}`
         }
       }
 
-      console.log('请求成功')
       return config
     },
     requestInterceptorCatch(err) {
-      console.log('请求成功')
       return err
     },
     responseInterceptor(res) {
-      console.log('响应成功')
       return res
     },
     responseInterceptorCatch(err) {

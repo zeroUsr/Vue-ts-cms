@@ -29,28 +29,44 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from 'vue'
-
+import { useStore } from 'vuex'
 import { ElForm } from 'element-plus'
 
 import { rules } from '../config/account-config'
+import localCache from '@/utils/cache'
 
 export default defineComponent({
   setup() {
+    const store = useStore()
+
     const account = reactive({
-      name: '',
-      password: ''
+      name: localCache.getCache('name') ?? '',
+      password: localCache.getCache('password') ?? ''
     })
 
     const formRef = ref<InstanceType<typeof ElForm>>()
 
-    const loginAction = () => {
+    const loginAction = (isKeepPassword: boolean) => {
       // 获取提交表单的验证
       formRef.value?.validate((valid) => {
         // 当符合 rules 时 valid 为 true
         if (valid) {
-          console.log('登录成功')
+          // 1.是否记住密码
+          if (isKeepPassword) {
+            localCache.setCache('name', account.name)
+            localCache.setCache('password', account.password)
+            localCache.setCache('isKeepPassword', isKeepPassword)
+          } else {
+            localCache.deleteCache('name')
+            localCache.deleteCache('password')
+            localCache.setCache('isKeepPassword', false)
+          }
+
+          // 2.进行登录逻辑
+          // 2.1 将用户名信息储存在 vuex
+          store.dispatch('login/accountLoginAction', { ...account })
         } else {
-          alert('账号或密码错误')
+          alert('用户名或密码错误')
         }
       })
     }
