@@ -1,4 +1,5 @@
 import { ILoginState } from './login/types'
+import { ISyestemType } from './main/system/types'
 
 interface IRootState {
   name: string
@@ -7,6 +8,7 @@ interface IRootState {
 
 interface IRootWithMoude {
   login: ILoginState
+  system: ISyestemType
 }
 
 type IStore = IRootState & IRootWithMoude

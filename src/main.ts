@@ -12,10 +12,12 @@ import { globalRegister } from './global'
 
 const app = createApp(App)
 
+// 注册 element-plus
 app.use(globalRegister)
-app.use(router)
 app.use(store)
+// 注册动态路由
 setupStore()
+app.use(router)
 app.mount('#app')
 
 // zeroRequest.request({

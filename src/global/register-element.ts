@@ -18,13 +18,25 @@ import {
   ElHeader,
   ElSubMenu,
   ElMenuItem,
-  ElMenu
+  ElMenu,
+  ElDropdown,
+  ElDropdownItem,
+  ElDropdownMenu,
+  ElAvatar,
+  ElBreadcrumb,
+  ElBreadcrumbItem,
+  ElRow,
+  ElCol,
+  ElOption,
+  ElSelect,
+  ElDatePicker,
+  ElTableColumn,
+  ElPagination
 } from 'element-plus'
 
 const components = [
   ElButton,
   ElTabs,
-  ElTable,
   ElTabPane,
   ElIcon,
   ElForm,
@@ -38,7 +50,21 @@ const components = [
   ElHeader,
   ElMenu,
   ElSubMenu,
-  ElMenuItem
+  ElMenuItem,
+  ElDropdown,
+  ElDropdownMenu,
+  ElDropdownItem,
+  ElAvatar,
+  ElBreadcrumb,
+  ElBreadcrumbItem,
+  ElRow,
+  ElCol,
+  ElOption,
+  ElSelect,
+  ElDatePicker,
+  ElTable,
+  ElTableColumn,
+  ElPagination
 ]
 
 export default function registerElement(app: App): void {

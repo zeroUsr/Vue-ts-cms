@@ -15,7 +15,20 @@ import 'element-plus/theme-chalk/el-header.css'
 import 'element-plus/theme-chalk/el-menu.css'
 import 'element-plus/theme-chalk/el-submenu.css'
 import 'element-plus/theme-chalk/el-menu-item.css'
-
-// ElSubMenu, ElMenuItem
+import 'element-plus/theme-chalk/el-menu-item.css'
+import 'element-plus/theme-chalk/el-dropdown.css'
+import 'element-plus/theme-chalk/el-dropdown-menu.css'
+import 'element-plus/theme-chalk/el-dropdown-item.css'
+import 'element-plus/theme-chalk/el-avatar.css'
+import 'element-plus/theme-chalk/el-breadcrumb.css'
+import 'element-plus/theme-chalk/el-breadcrumb-item.css'
+import 'element-plus/theme-chalk/el-row.css'
+import 'element-plus/theme-chalk/el-col.css'
+import 'element-plus/theme-chalk/el-option.css'
+import 'element-plus/theme-chalk/el-select.css'
+import 'element-plus/theme-chalk/el-date-picker.css'
+import 'element-plus/theme-chalk/el-table.css'
+import 'element-plus/theme-chalk/el-table-column.css'
+import 'element-plus/theme-chalk/el-pagination.css'
 
 export {}

@@ -3,14 +3,15 @@ import type { AxiosInstance } from 'axios'
 import type { ZeroRequestInterceptors, ZeroRequestConfig } from './type'
 
 import { ElLoading } from 'element-plus'
-import type { ILoadingInstance } from 'element-plus'
+// import type { ILoadingInstance } from 'element-plus'
 
 const DEFAULT_SHOWLOSDING = true
 
 class ZeroRequest {
   instance: AxiosInstance
   interceptors?: ZeroRequestInterceptors
-  loading?: ILoadingInstance
+  // loading?: ILoadingInstance
+  loading?: any
   showLoading: boolean
   constructor(config: ZeroRequestConfig) {
     this.instance = axios.create(config)

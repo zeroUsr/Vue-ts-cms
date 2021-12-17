@@ -1,4 +1,7 @@
+import { IBreadcurmb } from '@/base-ui/breadcurmb/types'
 import { RouteRecordRaw } from 'vue-router'
+
+let firstMenu: any = null
 
 export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
   const routes: RouteRecordRaw[] = []
@@ -19,6 +22,7 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
     for (const menu of menus) {
       if (menu.type === 2) {
         const route = allRoutes.find((route) => route.path === menu.url)
+        if (!firstMenu) firstMenu = menu
         if (route) routes.push(route)
       } else {
         _recurseGetRoute(menu.children)
@@ -30,3 +34,32 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
 
   return routes
 }
+
+// 根据 path 获取面包屑
+export function pathMapToBreadcurmb(userMenus: any, path: any) {
+  const breadcurmbs: IBreadcurmb[] = []
+  pathMapToMenu(userMenus, path, breadcurmbs)
+  return breadcurmbs
+}
+
+// 根据当前 path 获取用户菜单
+export function pathMapToMenu(
+  userMenus: any,
+  path: string,
+  breadcurmbs?: IBreadcurmb[]
+): any {
+  for (const userMenu of userMenus) {
+    if (userMenu.type === 2 && userMenu.url === path) {
+      return userMenu
+    } else {
+      const menu = pathMapToMenu(userMenu.children || [], path)
+      if (menu) {
+        breadcurmbs?.push({ name: userMenu.name })
+        breadcurmbs?.push({ name: menu.name })
+        return menu
+      }
+    }
+  }
+}
+
+export { firstMenu }

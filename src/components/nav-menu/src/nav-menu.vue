@@ -7,7 +7,7 @@
     </div>
     <!-- 展示用户菜单 -->
     <el-menu
-      default-active="2"
+      :default-active="defaultValue"
       class="el-menu-vertical"
       background-color="#0c2135"
       :collapse="collapse"
@@ -56,9 +56,10 @@
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 import { useStore } from '@/store'
+import { pathMapToMenu } from '@/utils/map-menus'
 
 export default defineComponent({
   props: {
@@ -70,17 +71,23 @@ export default defineComponent({
   setup() {
     const store = useStore()
     const router = useRouter()
+    const route = useRoute()
     const userMenus = computed(() => store.state.login.userMenus)
 
-    const menuItomClick = (menu: any) => {
+    const currentPath = route.path
+    const menu = pathMapToMenu(userMenus.value, currentPath)
+    const defaultValue = menu.id + ''
+
+    const menuItomClick = (menus: any) => {
       router.push({
-        path: menu.url
+        path: menus.url ?? '/not-found'
       })
     }
 
     return {
       userMenus,
-      menuItomClick
+      menuItomClick,
+      defaultValue
     }
   }
 })

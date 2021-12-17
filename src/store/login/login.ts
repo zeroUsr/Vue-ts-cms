@@ -30,9 +30,7 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
     changeUserMenus(state, userMenus: any) {
       state.userMenus = userMenus
-
       // 加载菜单路由
-
       const routes = mapMenusToRoutes(userMenus)
       // 将组件添加到 main 中
       routes.forEach((route) => {
