@@ -12,7 +12,7 @@
             <el-icon><refresh /></el-icon>
             重置
           </el-button>
-          <el-button type="primary">
+          <el-button type="primary" @click="handleQueryClick">
             <el-icon><search /></el-icon>
             搜索
           </el-button>
@@ -37,7 +37,8 @@ export default defineComponent({
   components: {
     ZeroForm
   },
-  setup(props) {
+  emits: ['handleResetClick', 'handleQueryClick'],
+  setup(props, { emit }) {
     // 动态添加 formDate 的数据,有配置文件的 filed 决定
     const formItems = props.searchFormConfig.formItems ?? []
     const formOriginData = {}
@@ -47,13 +48,22 @@ export default defineComponent({
 
     // 重置按钮
     const handleResetClick = () => {
-      formDate.value = formOriginData
+      for (const key in formOriginData) {
+        formDate.value[key] = formOriginData[key]
+      }
+      emit('handleResetClick')
+    }
+
+    // 搜索按钮
+    const handleQueryClick = () => {
+      emit('handleQueryClick', formDate.value)
     }
 
     const formDate = ref(formOriginData)
     return {
       formDate,
-      handleResetClick
+      handleResetClick,
+      handleQueryClick
     }
   }
 })

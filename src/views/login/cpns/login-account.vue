@@ -64,9 +64,11 @@ export default defineComponent({
 
           // 2.进行登录逻辑
           // 2.1 将用户名信息储存在 vuex
-          store.dispatch('login/accountLoginAction', { ...account })
+          store.dispatch('login/accountLoginAction', {
+            ...account
+          })
         } else {
-          alert('用户名或密码错误')
+          alert('用户名或密码格式错误')
         }
       })
     }

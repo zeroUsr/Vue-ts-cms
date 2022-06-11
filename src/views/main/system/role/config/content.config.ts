@@ -18,9 +18,10 @@ export const contentTableConfig = {
     {
       label: '操作',
       minwidth: '120',
-      slotName: 'handle'
+      slotName: 'handler'
     }
   ],
   showIndexColumn: true,
-  showSelectionColumn: true
+  showSelectionColumn: true,
+  createAction: '新建角色'
 }

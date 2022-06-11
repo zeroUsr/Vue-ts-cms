@@ -62,4 +62,41 @@ export function pathMapToMenu(
   }
 }
 
+// 获取当前用户的权限permission
+export function mapMenusToPermission(userMenus: any) {
+  const permissions: string[] = []
+
+  const _recurseGetPermission = (menus: any) => {
+    for (const menu of menus) {
+      if (menu.type === 1 || menu.type === 2) {
+        _recurseGetPermission(menu.children ?? [])
+      } else if (menu.type === 3) {
+        permissions.push(menu.permission)
+      }
+    }
+  }
+
+  _recurseGetPermission(userMenus)
+
+  return permissions
+}
+
+// 获取用户的角色
+export function mapMenusToLeafKeys(menuList: any[]) {
+  const leafkeys: number[] = []
+  const _recurseGetLeafkey = (menuList: any[]) => {
+    for (const menu of menuList) {
+      if (menu.children) {
+        _recurseGetLeafkey(menu.children)
+      } else {
+        leafkeys.push(menu.id)
+      }
+    }
+  }
+
+  _recurseGetLeafkey(menuList)
+
+  return leafkeys
+}
+
 export { firstMenu }

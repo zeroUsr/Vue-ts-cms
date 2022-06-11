@@ -1,4 +1,5 @@
 import 'element-plus/theme-chalk/base.css'
+import 'element-plus/theme-chalk/el-popper.css'
 import 'element-plus/theme-chalk/el-button.css'
 import 'element-plus/theme-chalk/el-loading.css'
 import 'element-plus/theme-chalk/el-tabs.css'
@@ -30,5 +31,15 @@ import 'element-plus/theme-chalk/el-date-picker.css'
 import 'element-plus/theme-chalk/el-table.css'
 import 'element-plus/theme-chalk/el-table-column.css'
 import 'element-plus/theme-chalk/el-pagination.css'
+import 'element-plus/theme-chalk/el-image.css'
+import 'element-plus/theme-chalk/el-image-viewer.css'
+import 'element-plus/theme-chalk/el-message-box.css'
+import 'element-plus/theme-chalk/el-message.css'
+import 'element-plus/theme-chalk/el-overlay.css'
+import 'element-plus/theme-chalk/el-dialog.css'
+import 'element-plus/theme-chalk/el-tree.css'
+import 'element-plus/theme-chalk/el-card.css'
+
+// import 'element-plus/theme-chalk/index.css'
 
 export {}

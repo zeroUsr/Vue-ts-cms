@@ -4,7 +4,7 @@ export const contentTableConfig = {
     { prop: 'name', label: '用户名', minWidth: '100' },
     { prop: 'realname', label: '真实姓名', minWidth: '100' },
     { prop: 'cellphone', label: '电话号码', minWidth: '100' },
-    { prop: 'enable', label: '状态', minWidth: '100', slotName: 'status' },
+    { prop: 'enable', label: '状态', minWidth: '100', slotName: 'enable' },
     {
       prop: 'createAt',
       label: '创建时间',
@@ -20,9 +20,10 @@ export const contentTableConfig = {
     {
       label: '操作',
       minwidth: '120',
-      slotName: 'handle'
+      slotName: 'handler'
     }
   ],
   showIndexColumn: true,
-  showSelectionColumn: true
+  showSelectionColumn: true,
+  createAction: '新建用户'
 }

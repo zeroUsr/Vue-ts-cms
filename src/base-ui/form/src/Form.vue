@@ -8,6 +8,7 @@
         <template v-for="formItem in formItems" :key="formItem.label">
           <el-col v-bind="colLayout">
             <el-form-item
+              v-if="!formItem.isHidden"
               :label="formItem.label"
               :style="itemStyle"
               :rules="formItem.rules"
@@ -96,13 +97,6 @@ export default defineComponent({
   setup(props, { emit }) {
     // 获取 v-model 传过来的值,并结构
     const formDate = ref({ ...props.modelValue })
-
-    watch(
-      () => props.modelValue,
-      (newValue) => {
-        formDate.value = { ...props.modelValue }
-      }
-    )
 
     // 监听 formDate 的值,并 emit 发送事件到父组件,使其更改值
     watch(formDate, (newValue) => emit('update:modelValue', newValue), {

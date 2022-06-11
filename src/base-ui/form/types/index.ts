@@ -10,6 +10,7 @@ export interface IFormItem {
   options?: any[]
   // 其他的 option
   otherOptions?: any
+  isHidden?: boolean
 }
 
 export interface IForm {

@@ -9,7 +9,7 @@ import {
 import localCache from '@/utils/cache'
 import { ILoginState } from './types'
 import { IRootState } from '../types'
-import { mapMenusToRoutes } from '@/utils/map-menus'
+import { mapMenusToRoutes, mapMenusToPermission } from '@/utils/map-menus'
 
 const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,
@@ -17,7 +17,8 @@ const loginModule: Module<ILoginState, IRootState> = {
     return {
       token: '',
       userInfo: {},
-      userMenus: []
+      userMenus: [],
+      permission: []
     }
   },
   getters: {},
@@ -36,36 +37,53 @@ const loginModule: Module<ILoginState, IRootState> = {
       routes.forEach((route) => {
         router.addRoute('main', route)
       })
+
+      // 加载用户权限
+      const permission = mapMenusToPermission(userMenus)
+      state.permission = permission
     }
   },
   actions: {
-    async accountLoginAction({ commit }, payload: any) {
+    async accountLoginAction({ commit, dispatch }, payload: any) {
       // 1.实现登录逻辑
-      const accountResult = await accountLoginRequest(payload)
-      const { id, token } = accountResult.data
-      commit('changeToken', token)
-      localCache.setCache('token', token)
+      let accountResult = null
+      accountLoginRequest(payload)
+        .then(async (res) => {
+          accountResult = res
+          const { id, token } = accountResult.data
+          commit('changeToken', token)
+          localCache.setCache('token', token)
 
-      // 2.请求用户信息
-      const userInfoResult = await requestUserInfoById(id)
-      const userInfo = userInfoResult.data
-      commit('changeUserInfo', userInfo)
-      localCache.setCache('userInfo', userInfo)
+          // 2.请求用户信息
+          const userInfoResult = await requestUserInfoById(id)
+          const userInfo = userInfoResult.data
+          commit('changeUserInfo', userInfo)
+          localCache.setCache('userInfo', userInfo)
 
-      // 3.请求用户菜单信息
-      const userMenusResult = await requestUserMenusById(userInfo.role.id)
-      const userMenus = userMenusResult.data
-      commit('changeUserMenus', userMenus)
-      localCache.setCache('userMenus', userMenus)
+          // 3.请求用户菜单信息
+          const userMenusResult = await requestUserMenusById(userInfo.role.id)
+          const userMenus = userMenusResult.data
+          commit('changeUserMenus', userMenus)
+          localCache.setCache('userMenus', userMenus)
 
-      // 4.跳转首页
-      router.push('/main')
+          // 请求部门/用户信息
+          dispatch('getInitialDataAction', null, { root: true })
+
+          // 4.跳转首页
+          router.push('/main')
+        })
+        .catch(() => {
+          alert('用户名或密码错误')
+          return
+        })
     },
-    loadLocalLogin({ commit }) {
+    loadLocalLogin({ commit, dispatch }) {
       const token = localCache.getCache('token')
       if (token) {
         commit('changeToken', token)
       }
+
+      dispatch('getInitialDataAction', null, { root: true })
 
       const userInfo = localCache.getCache('userInfo')
       if (userInfo) {

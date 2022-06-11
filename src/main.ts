@@ -4,7 +4,7 @@ import '@/assets/css/index.less'
 
 import App from './App.vue'
 import router from './router'
-import { setupStore } from './router'
+import { setupStore } from './store'
 import store from './store'
 // import zeroRequest from './service'
 

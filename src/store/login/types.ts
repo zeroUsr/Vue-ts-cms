@@ -2,6 +2,7 @@ interface ILoginState {
   token: string
   userInfo: any
   userMenus: any
+  permission: string[]
 }
 
 export { ILoginState }

@@ -2,7 +2,6 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 // 声明导入的变量为类型(可不加)
 import type { RouteRecordRaw } from 'vue-router'
 
-import store from '@/store'
 import localCache from '@/utils/cache'
 import { firstMenu } from '@/utils/map-menus'
 
@@ -42,10 +41,5 @@ router.beforeEach((to) => {
   // 当跳转为 /main 时使其跳转到第一个用户菜单
   if (to.path === '/main') return firstMenu.url
 })
-
-// 初始化 store 的值
-export function setupStore(): void {
-  store.dispatch('login/loadLocalLogin')
-}
 
 export default router
